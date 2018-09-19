@@ -1,30 +1,21 @@
 package com.example.controller;
 
-import com.example.config.CustomUser;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
-import org.springframework.web.socket.adapter.standard.StandardWebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.nio.file.attribute.UserPrincipal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Component
 public class WebSocketTextHandler extends TextWebSocketHandler {
 
-    private List<WebSocketSession> sessionList = new ArrayList<>();
+    private List<WebSocketSession> sessionList;
 
     public WebSocketTextHandler() {
-        System.out.println("open websocket");
+        sessionList = new ArrayList<>();
     }
 
     //connect
@@ -34,18 +25,33 @@ public class WebSocketTextHandler extends TextWebSocketHandler {
 
         //메시지 발송을 위해 세션목록에 추가한다.
         sessionList.add(session);
+
+        sessionList.stream().forEach(client -> {
+            try {
+                if(!client.getId().equals(session.getId())) {
+                    client.sendMessage(new TextMessage("상대방이 입장하셨습니다."));
+                }
+            }catch (Exception e){
+                System.err.println(e.getMessage());
+            }
+        });
     }
 
     //send message
     @Override
-    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+    protected void handleTextMessage(WebSocketSession session, TextMessage message) {
 
         String payloadMessage = message.getPayload();
-        for (WebSocketSession client : sessionList) {
-            if(!client.getId().equals(session.getId())){
-                client.sendMessage(new TextMessage("상대방 : " + payloadMessage));
+
+        sessionList.stream().forEach(client -> {
+            try {
+                if(!client.getId().equals(session.getId())){
+                    client.sendMessage(new TextMessage("상대방 : " + payloadMessage));
+                }
+            }catch (Exception e){
+                System.err.println(e.getMessage());
             }
-        }
+        });
     }
 
     //disconnect event
@@ -56,13 +62,14 @@ public class WebSocketTextHandler extends TextWebSocketHandler {
         //메시지 발송 제외를 위해 세션목록에서 삭제한다.
         sessionList.remove(session);
 
-        for (WebSocketSession client : sessionList) {
-            if(!client.getId().equals(session.getId())){
-                client.sendMessage(new TextMessage("상대방이 대화방을 나갔습니다."));
+        sessionList.stream().forEach(client -> {
+            try {
+                client.sendMessage(new TextMessage("상대방이 대화방은 나갔습니다."));
+            }catch (Exception e){
+                System.err.println(e.getMessage());
             }
-        }
+        });
 
-        System.out.println("list" + sessionList.size());
     }
 
 }
