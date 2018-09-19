@@ -133,8 +133,8 @@
   <form action="/login" method="post">
     <div class="login">
       <h2>Sign in</h2>
-      <input id="username"" name="username" placeholder="Username" type="text"/>
-      <input id="password" name="password" placeholder="Password" type="password"/>
+      <input id="username" name="username" placeholder="Username" value="admin" type="text"/>
+      <input id="password" name="password" placeholder="Password" value="admin" type="password"/>
       <div class="remember">
         <input id="remember" name="remember" type="checkbox"/>
         <label for="remember"></label>Remember me

@@ -23,6 +23,7 @@ public class ExampleApplication {
 		return (args) -> {
 			// save a couple of customers
 			repository.save(new Customer("admin", "admin", "Jack", "ROLE_ADMIN"));
+			repository.save(new Customer("super", "admin", "Chan", "ROLE_ADMIN"));
 			repository.save(new Customer("user", "user", "Chloe", "ROLE_USER"));
 			repository.save(new Customer("user1", "user1", "Bauer", "ROLE_USER"));
 		};
