@@ -9,6 +9,7 @@ public class CustomUser extends User {
 	private static final long serialVersionUID = 1L;
 	
 	private String userId;
+	private String userName;
 	private Long userSeq;
     private String userEmail;
     private String mobileNo;
@@ -18,15 +19,16 @@ public class CustomUser extends User {
     	super(builder.username, builder.password, builder.authorities);
     	
     	this.userId = builder.userId;
+    	this.userName = builder.userName;
     	this.userSeq = builder.userSeq;
     	this.userEmail = builder.userEmail;
     	this.mobileNo = builder.mobileNo;
     	
 	}
     
-    public String getUserId() {
-		return userId;
-	}
+    public String getUserId() {return userId;}
+
+	public String getUserName() {return userName;}
     
 	public Long getUserSeq() {
 		return userSeq;
@@ -52,6 +54,7 @@ public class CustomUser extends User {
 	public static class Builder {
 		private String userId;
 		private String username;
+		private String userName;
 		private String password;
 		private Collection<GrantedAuthority> authorities;
 		
@@ -73,6 +76,11 @@ public class CustomUser extends User {
 	    public Builder userId(String userId) {
 	    	this.userId = userId;
 	    	
+	    	return this;
+	    }
+	    public Builder userName(String userName) {
+	    	this.userName = userName;
+
 	    	return this;
 	    }
 		

@@ -60,7 +60,7 @@ public class ExampleServiceImpl implements ExampleService {
     private CustomUser buildUserForAuthentication(Customer customer, List<GrantedAuthority> authorities) {
 
         return new CustomUser.Builder(customer.getUserId(), customer.getUserPassword(),
-                true, true, true, true, authorities).userSeq(customer.getId()).build();
+                true, true, true, true, authorities).userSeq(customer.getId()).userName(customer.getUserName()).build();
     }
 
     private List<GrantedAuthority> buildUserAuthority(String userRoles) {

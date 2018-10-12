@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html >
 <head>
@@ -136,7 +137,9 @@
       <input id="username" name="username" placeholder="Username" value="admin" type="text"/>
       <input id="password" name="password" placeholder="Password" value="admin" type="password"/>
       <div class="remember">
-        <input id="remember" name="remember-me" type="checkbox"/>
+        <%--${pageContext.request.userPrincipal}--%>
+        <sec:authentication var="user" property="principal" />
+        <input id="remember" name="remember-me" <sec:authorize access="isRememberMe()">checked</sec:authorize> type="checkbox"/>
         <label for="remember"></label>Remember me
       </div>
       <input type="submit" value="Sign in"/>
