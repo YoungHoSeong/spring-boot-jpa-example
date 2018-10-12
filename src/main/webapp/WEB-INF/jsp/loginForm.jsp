@@ -138,7 +138,6 @@
       <input id="password" name="password" placeholder="Password" value="admin" type="password"/>
       <div class="remember">
         <%--${pageContext.request.userPrincipal}--%>
-        <sec:authentication var="user" property="principal" />
         <input id="remember" name="remember-me" <sec:authorize access="isRememberMe()">checked</sec:authorize> type="checkbox"/>
         <label for="remember"></label>Remember me
       </div>
