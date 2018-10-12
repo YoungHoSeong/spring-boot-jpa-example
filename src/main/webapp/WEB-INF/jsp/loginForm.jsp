@@ -136,7 +136,7 @@
       <input id="username" name="username" placeholder="Username" value="admin" type="text"/>
       <input id="password" name="password" placeholder="Password" value="admin" type="password"/>
       <div class="remember">
-        <input id="remember" name="remember" type="checkbox"/>
+        <input id="remember" name="remember-me" type="checkbox"/>
         <label for="remember"></label>Remember me
       </div>
       <input type="submit" value="Sign in"/>

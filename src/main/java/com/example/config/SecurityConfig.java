@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -41,11 +43,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .and()
             .exceptionHandling().authenticationEntryPoint(new AuthenticationEntryPoint("/loginForm"))
         .and()
-        	.logout()
+        	.logout().deleteCookies("JSESSIONID")
         .and()
+			.rememberMe().key("uniqueAndSecret").tokenValiditySeconds(86400)
+		.and()
         	.csrf().disable();
+        //token-validity-seconds – The expire date of “remember-me” cookie, in seconds. For example, 1209600 = 2 weeks (14 days), 86400 = 1 day, 18000 = 5 hours.
     }
-
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
