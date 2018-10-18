@@ -18,14 +18,9 @@ public class ExcelBuilderView extends AbstractXlsxStreamingView {
 
         this.createSheetName = createSheetName;
 
-        headerKey = new ArrayList<>();
-        headerText = new ArrayList<>();
+        headerKey = new ArrayList<>(header.keySet());
+        headerText = new ArrayList<>(header.values());
 
-
-        for ( String key : header.keySet() ) {
-            headerKey.add( key);
-            headerText.add( header.get(key));
-        }
     }
 
     @Override
